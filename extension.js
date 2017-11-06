@@ -81,12 +81,12 @@ function activate(context) {
         translate(sentence, 'DE', 'EN')
         .then(res => {
             translatedSentence = res.translation
-            return wordAlternatives(translatedSentence, prefixText, 'EN', 'DE')
+            return wordAlternatives(translatedSentence, 'EN', 'DE', prefixText)
         })
-        .then(alternatives => {
+        .then(res => {
             return Promise.all([
-                alternatives,
-                vscode.window.showQuickPick(alternatives.map(alt => {
+                res.alternatives,
+                vscode.window.showQuickPick(res.alternatives.map(alt => {
                     return alt.slice(prefixText.length);
                 }))
             ])
